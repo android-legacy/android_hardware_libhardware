@@ -27,6 +27,8 @@
 #define LOG_TAG "HAL"
 #include <utils/Log.h>
 
+#define LOG_NDEBUG 0
+
 /** Base path of the hal modules */
 #define HAL_LIBRARY_PATH1 "/system/lib/hw"
 #define HAL_LIBRARY_PATH2 "/vendor/lib/hw"
