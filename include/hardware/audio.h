@@ -332,12 +332,6 @@ struct audio_stream_out {
      */
     int (*get_render_position)(const struct audio_stream_out *stream,
                                uint32_t *dsp_frames);
-#ifdef QCOM_HARDWARE
-    /**
-     * start audio data rendering
-     */
-    int (*start)(struct audio_stream_out *stream);
-
 #ifndef ICS_AUDIO_BLOB
 #ifdef QCOM_HARDWARE
     /**
@@ -350,11 +344,6 @@ struct audio_stream_out {
      */
     int (*stop)(struct audio_stream_out *stream);
 #endif
-
-    /**
-     * stop audio data rendering
-     */
-    int (*stop)(struct audio_stream_out *stream);
 #endif
     /**
      * get the local time at which the next write to the audio driver will be presented.
