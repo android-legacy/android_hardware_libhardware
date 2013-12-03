@@ -178,6 +178,7 @@ struct audio_config {
     audio_offload_info_t offload_info;
 };
 typedef struct audio_config audio_config_t;
+
 #ifdef QCOM_HARDWARE
 /** Structure to save buffer information for applying effects for
  *  LPA buffers */
@@ -187,6 +188,7 @@ struct buf_info {
     int **buffers;
 };
 #endif
+
 /* common audio stream parameters and operations */
 struct audio_stream {
 
@@ -332,6 +334,7 @@ struct audio_stream_out {
      */
     int (*get_render_position)(const struct audio_stream_out *stream,
                                uint32_t *dsp_frames);
+
 #ifndef ICS_AUDIO_BLOB
 #ifdef QCOM_HARDWARE
     /**
@@ -344,7 +347,7 @@ struct audio_stream_out {
      */
     int (*stop)(struct audio_stream_out *stream);
 #endif
-#endif
+
     /**
      * get the local time at which the next write to the audio driver will be presented.
      * The units are microseconds, where the epoch is decided by the local audio HAL.
