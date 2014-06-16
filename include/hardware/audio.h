@@ -180,7 +180,7 @@ struct audio_config {
 };
 typedef struct audio_config audio_config_t;
 
-#ifdef QCOM_HARDWARE
+#ifdef QCOM_DIRECTTRACK
 /** Structure to save buffer information for applying effects for
  *  LPA buffers */
 struct buf_info {
@@ -352,7 +352,7 @@ struct audio_stream_out {
     int (*set_callback)(struct audio_stream_out *stream,
             stream_callback_t callback, void *cookie);
 
-#ifdef QCOM_HARDWARE
+#ifdef QCOM_DIRECTTRACK
     /**
      * start audio data rendering
      */
@@ -429,7 +429,7 @@ struct audio_stream_out {
     int (*get_presentation_position)(const struct audio_stream_out *stream,
                                uint64_t *frames, struct timespec *timestamp);
 
-#ifdef QCOM_HARDWARE
+#ifdef QCOM_DIRECTTRACK
     /**
     * return the current timestamp after quering to the driver
      */
@@ -491,7 +491,7 @@ typedef struct audio_stream_in audio_stream_in_t;
 static inline size_t audio_stream_frame_size(const struct audio_stream *s)
 {
     size_t chan_samp_sz;
-#ifdef QCOM_HARDWARE
+#ifdef QCOM_DIRECTTRACK
     uint32_t chan_mask = s->get_channels(s);
     int format = s->get_format(s);
     char *tmpparam;
@@ -539,7 +539,8 @@ static inline size_t audio_stream_frame_size(const struct audio_stream *s)
 #else
     audio_format_t format = s->get_format(s);
 
-    if (audio_is_linear_pcm(format)) {
+    if (audio_is_linear_pcm(format) &&
+            format != AUDIO_FORMAT_PCM_8_24_BIT) {
         chan_samp_sz = audio_bytes_per_sample(format);
         return popcount(s->get_channels(s)) * chan_samp_sz;
     }
@@ -685,7 +686,7 @@ static inline int audio_hw_device_close(struct audio_hw_device* device)
     return device->common.close(&device->common);
 }
 
-#ifdef QCOM_HARDWARE
+#ifdef QCOM_DIRECTTRACK
 #ifdef __cplusplus
 /**
  *Observer class to post the Events from HAL to Flinger
